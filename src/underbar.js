@@ -23,9 +23,9 @@
    *
    * The .first function is implemented for you, to help guide you toward success
    * in your work on the following functions. Whenever you see a portion of the
-   * assignment pre-completed, be sure to read and understanding it fully before
+   * assignment pre-completed, be sure to read and understand it fully before
    * you proceed. Skipping this step will lead to considerably more difficulty
-   * implementing the sections you are responsible for.
+   * in implementing the sections you are responsible for.
    */
 
   // Return an array of the first n elements of an array. If n is undefined,
