@@ -89,9 +89,9 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
-	return _.filter(collection,function(item){
-		return !test(item);
-	});
+		return _.filter(collection,function(item){
+			return !test(item);
+		});
   };
 
   // Produce a duplicate-free version of the array.
@@ -181,6 +181,12 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+		return _.reduce(collection, function(testPassed,item){
+			if (testPassed===false){
+				return false;
+			}
+			return iterator===undefined ? item : Boolean(iterator(item));
+		},true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
