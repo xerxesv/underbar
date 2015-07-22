@@ -185,7 +185,7 @@
 			if (testPassed === false){
 				return false;
 			}
-			return iterator === undefined ? item : Boolean(iterator(item));
+			return iterator === undefined ? Boolean(item) : Boolean(iterator(item));
 		},true);
   };
 
@@ -263,7 +263,7 @@
     return function() {
       if (!alreadyCalled) {
         // TIP: .apply(this, arguments) is the standard way to pass on all of the
-        // infromation from one function call to another.
+        // information from one function call to another.
         result = func.apply(this, arguments);
         alreadyCalled = true;
       }
@@ -272,6 +272,12 @@
     };
   };
 
+/*
+	var onceAdd = _.once(function(a,b){return a+b;});
+	onceAdd(2,4); //returns 6
+	onceAdd(); //returns 6
+	onceAdd(1,1); //returns 6
+*/	
   // Memorize an expensive function's results by storing them. You may assume
   // that the function takes only one argument and that it is a primitive.
   // memoize could be renamed to oncePerUniqueArgumentList; memoize does the
@@ -281,8 +287,19 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+		var cache = {};
+		
+		return function(arg){
+			if (cache[arg] === undefined){
+				cache[arg] = func.apply(this, arguments);
+			}
+			return cache[arg];
+		};
   };
-
+	/* This can't store results for unique combinations of arguments 
+		Note to self: Rewrite this function to be able to do so later...
+	*/
+	
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
   //
@@ -290,7 +307,10 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+		window.setTimeout.apply(this, arguments);
   };
+	
+	/* This function is exactly like setTimeout ????? */
 
 
   /**
@@ -304,6 +324,13 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+		var arrCopy = array.slice();
+		var shuffled = [];
+		while(arrCopy.length > 0){
+			var toRemove = Math.floor(Math.random() * arrCopy.length);
+			shuffled = shuffled.concat(arrCopy.splice(toRemove,1));
+		}
+		return shuffled;
   };
 
 
