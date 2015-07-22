@@ -329,6 +329,11 @@
 		while(arrCopy.length > 0){
 			var toRemove = Math.floor(Math.random() * arrCopy.length);
 			shuffled = shuffled.concat(arrCopy.splice(toRemove,1));
+			
+			if(shuffled.join() === array.join()){
+				arrCopy = array.slice();
+				shuffled = [];
+			}
 		}
 		return shuffled;
   };
@@ -362,8 +367,15 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
-		if (iterator.length !== undefined){
-			
+		if (typeof iterator === "string"){
+			return collection.sort(function(a,b){
+				return a[iterator] - b[iterator];
+			});
+		}
+		else {
+			return collection.sort(function(a,b){
+				return iterator(a) - iterator(b);
+			});
 		}
   };
 
