@@ -474,7 +474,7 @@
 			console.log("scheduling in... " + timer);
 			scheduled = true;
 			window.setTimeout(function(){
-				throttled();
+				throttled.apply(this, arguments);
 				scheduled = false;
 			},timer);
 		}
