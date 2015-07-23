@@ -455,27 +455,35 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
-	var canCall = true;
-	var timer = 999;
+	var timer = 0;
+	var scheduled = false;
 	
 	return function(){
-		if(canCall){
+		if(timer===0){
 			func.apply(this, arguments);
-			canCall = false;
 			console.log("executing... " + timer);
 			
 			timer = wait;
-			window.setInterval(function(){
-				while(timer>0){
-					timer = timer - 10;
-					console.log(timer);
+			var intervalID = window.setInterval(function(){
+				timer -= 10;
+				console.log(intervalID + " - " + timer);
+				if (timer <= 0){
+					window.clearInterval(intervalID);
+					console.log(intervalID);
 				}
 			},10);
-			window.setTimeout(function(){canCall = true;}, wait);
+			
 			
 		}
+		else if (!scheduled){
+			console.log("scheduling in... " + timer);
+			scheduled = true;
+			window.setTimeout(function(){
+				console.log("doing the thing");
+			},timer);
+		}
 		else{
-			console.log("can't do it! timer: " + timer);
+			console.log("can't do it!");
 		}
 	}
   };
