@@ -419,19 +419,14 @@
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
+   //[0,1,2,3],[2,5],[2,3,100] should return [2]
   _.intersection = function() {
-	  var intersecting = [];
-	  var firstArr = arguments[0];
-	  var restArrs = Array.prototype.slice.call(arguments,1);
-	  _.each(restArrs, function(array){
-		_.each(firstArr, function(element){
-		  if(_.indexOf(array,element) !== -1){
-			  intersecting.push(element);
-		  }
-		});  
-	  });
-	  
-	  
+	  var intersecting = arguments[0];
+	  for (var i = 1; i < arguments.length; i++){
+		  intersecting = _.filter(arguments[i], function(element){
+			  return _.indexOf(intersecting,element) !== -1;
+		  });
+	  }
 	  return intersecting;
   };
 
