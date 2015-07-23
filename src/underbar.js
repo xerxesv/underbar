@@ -433,13 +433,19 @@
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
 	
-	  var intersecting = _.intersection.apply(null,arguments);
+	  //[0,1,2,3],[2,5],[3,100] should return [0,1]
+	  var firstArr = arguments[0];
+	  var restArrs = Array.prototype.slice.call(arguments,1);
 	  
-	  return _.filter(arguments[0], function(element){
-		 return !_.some(intersecting,function(elementToRemove){
-			 return element === elementToRemove;
-		 });
+	  return _.filter(firstArr, function(element){
+		 return !_.some(restArrs, function(arr){
+			 if(_.contains(arr,element)){
+				 return true;
+			 }
+			 else return false;
+		 }); 
 	  });
+	  
 	  
   };
 
