@@ -458,28 +458,24 @@
 	var timer = 0;
 	var scheduled = false;
 	
-	return function(){
+	return function throttled(){
 		if(timer===0){
 			func.apply(this, arguments);
 			console.log("executing... " + timer);
-			
 			timer = wait;
 			var intervalID = window.setInterval(function(){
 				timer -= 10;
-				console.log(intervalID + " - " + timer);
 				if (timer <= 0){
 					window.clearInterval(intervalID);
-					console.log(intervalID);
 				}
 			},10);
-			
-			
 		}
-		else if (!scheduled){
+		else if (scheduled===false){
 			console.log("scheduling in... " + timer);
 			scheduled = true;
 			window.setTimeout(function(){
-				console.log("doing the thing");
+				throttled();
+				scheduled = false;
 			},timer);
 		}
 		else{
