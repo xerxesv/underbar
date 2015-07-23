@@ -403,7 +403,19 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+	  var flattened = [];
+	  for (var i = 0; i < nestedArray.length; i++){
+		  if (!Array.isArray(nestedArray[i])){
+			  flattened.push(nestedArray[i]);
+		  }
+		  else {
+			  flattened = flattened.concat(_.flatten(nestedArray[i]));
+		  }
+	  }
+	  return flattened;
   };
+  
+  /* Not sure what "result" parameter should do - is it equivalent to the second parameter ("shallow") in flatten in the underscore.js library? */
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
