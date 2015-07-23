@@ -421,19 +421,21 @@
   // every item shared between all the passed-in arrays.
    //[0,1,2,3],[2,5],[2,3,100] should return [2]
   _.intersection = function() {
-	  var intersecting = arguments[0];
-	  for (var i = 1; i < arguments.length; i++){
-		  intersecting = _.filter(arguments[i], function(element){
-			  return _.indexOf(intersecting,element) !== -1;
-		  });
-	  }
-	  return intersecting;
+	  var firstArr = arguments[0];
+	  var restArrs = Array.prototype.slice.call(arguments,1);
+	  
+	  return _.filter(firstArr, function(element){
+		 return _.every(restArrs, function(arr){
+			if (_.contains(arr, element)){
+				return true;
+			}
+		 }); 
+	  });	  
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
-	
 	  //[0,1,2,3],[2,5],[3,100] should return [0,1]
 	  var firstArr = arguments[0];
 	  var restArrs = Array.prototype.slice.call(arguments,1);
@@ -443,11 +445,8 @@
 			 if(_.contains(arr,element)){
 				 return true;
 			 }
-			 else return false;
 		 }); 
 	  });
-	  
-	  
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
