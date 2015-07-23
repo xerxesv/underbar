@@ -459,7 +459,7 @@
 	var scheduled = false;
 	
 	return function throttled(){
-		if(timer===0){
+		if(timer <= 0){
 			func.apply(this, arguments);
 			console.log("executing... " + timer);
 			timer = wait;
