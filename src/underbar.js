@@ -440,8 +440,8 @@
 	  var firstArr = arguments[0];
 	  var restArrs = Array.prototype.slice.call(arguments,1);
 	  
-	  return _.filter(firstArr, function(element){
-		 return !_.some(restArrs, function(arr){
+	  return _.reject(firstArr, function(element){
+		 return _.some(restArrs, function(arr){
 			 if(_.contains(arr,element)){
 				 return true;
 			 }
