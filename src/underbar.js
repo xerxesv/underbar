@@ -455,5 +455,30 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+	var canCall = true;
+	var timer = 999;
+	
+	return function(){
+		if(canCall){
+			func.apply(this, arguments);
+			canCall = false;
+			console.log("executing... " + timer);
+			
+			timer = wait;
+			window.setInterval(function(){
+				while(timer>0){
+					timer = timer - 10;
+					console.log(timer);
+				}
+			},10);
+			window.setTimeout(function(){canCall = true;}, wait);
+			
+		}
+		else{
+			console.log("can't do it! timer: " + timer);
+		}
+	}
   };
+
+  
 }());
